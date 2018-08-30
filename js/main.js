@@ -64,6 +64,8 @@ chart_ref.on('value',function(snapshot) {
                 fontFamily: "Poppins"
             });
         });
+        var myChart = new Chart(id, {});
+        myChart.destroy();
         var myChart = new Chart(id, {
             type: 'bar',
             defaultFontFamily: 'Poppins',
