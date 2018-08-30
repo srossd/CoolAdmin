@@ -26,19 +26,43 @@
   
   })(jQuery);
 
+services = ['firebase', 'google', 'wiki', 'nltk', 'selenium', 'tesseract']
+services.forEach(function(service) {
+    firebase.database().ref('/'+service).on('value', function(snapshot) {
+        if(snapshot.val() == 'on')
+            $("#"+service).addClass("badge-success").removeClass("badge-info").removeClass("badge-warning");
+        else
+            $("#"+service).addClass("badge-warning").removeClass("badge-info").removeClass("badge-success");
+    });
+});
+
 var chart_ref = firebase.database().ref('/charts/');
 chart_ref.on('value',function(snapshot) {
     snapshot.forEach(function(chart) {
-        var id = chart.child('id').val();
+        var id = chart.key;
         console.log(id);
         $("#"+id).height(200);
         var title = chart.child('title').val();
+        $("#"+id).prev().html(title);
         var col = chart.child('color').val();
         var labels = [];
-        var data = [];
-        chart.child('data').forEach(function(child) {
+        var datasets = [];
+        chart.child('labels').forEach(function(child) {
             labels.push(child.key);
-            data.push(child.val());
+        });
+        chart.child('data').forEach(function(dataset) {
+            var data = Array(labels.length);
+            dataset.child('vals').forEach(function(child) {
+                data[labels.indexOf(child.key)] = child.val();
+            });
+            datasets.push({
+                data: data,
+                label: dataset.key,
+                borderColor: "rgba("+col+", 0.9)",
+                borderWidth: "0",
+                backgroundColor: "rgba("+col+", 0.5)",
+                fontFamily: "Poppins"
+            });
         });
         var myChart = new Chart(id, {
             type: 'bar',
