@@ -30,9 +30,9 @@ services = ['firebase', 'google', 'wiki', 'nltk', 'selenium', 'tesseract']
 services.forEach(function(service) {
     firebase.database().ref('/'+service).on('value', function(snapshot) {
         if(snapshot.val() == 'on')
-            $("#"+service).addClass("badge-success").removeClass("badge-info").removeClass("badge-warning");
+            $("#"+service).addClass("badge-success").removeClass("badge-info").removeClass("badge-danger");
         else
-            $("#"+service).addClass("badge-warning").removeClass("badge-info").removeClass("badge-success");
+            $("#"+service).addClass("badge-danger").removeClass("badge-info").removeClass("badge-success");
     });
 });
 
