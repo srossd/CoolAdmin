@@ -48,7 +48,7 @@ chart_ref.on('value',function(snapshot) {
         var labels = [];
         var datasets = [];
         chart.child('labels').forEach(function(child) {
-            labels.push(child.key);
+            labels.push(decodeURIComponent(child.key));
         });
         chart.child('data').forEach(function(dataset) {
             var data = Array(labels.length);
