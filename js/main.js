@@ -69,16 +69,7 @@ chart_ref.on('value',function(snapshot) {
             defaultFontFamily: 'Poppins',
             data: {
                 labels: labels,
-                datasets: [
-                {
-                    data: data,
-                    label: title,
-                    borderColor: "rgba("+col+", 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba("+col+", 0.5)",
-                    fontFamily: "Poppins"
-                }
-                ]
+                datasets: datasets
             },
             options: {
                 scales: {
